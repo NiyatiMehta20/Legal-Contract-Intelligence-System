@@ -1,0 +1,256 @@
+{
+  "summary": {
+    "total_queries": 8,
+    "type_detection_accuracy": 0.5,
+    "avg_keyword_coverage": 0.573,
+    "citation_rate": 0.75,
+    "substantial_answer_rate": 1.0,
+    "not_found_rate": 0.0,
+    "avg_response_time_sec": 17.36,
+    "max_response_time_sec": 27.56,
+    "avg_sources_used": 2.4,
+    "avg_answer_length_words": 106.2
+  },
+  "results": [
+    {
+      "question": "How can this agreement be terminated?",
+      "expected_type": "termination",
+      "detected_type": "general",
+      "type_match": false,
+      "answer": "This Agreement will terminate on the earlier of: (a) the written agreement of the parties to terminate this Agreement; (b) the consummation of the Transaction or (c) __________ (Check one)  months  years from the date hereof. 10. Amendment. This Agreement may be amended or modified only by a written agreement signed by both of the parties.",
+      "answer_length": 341,
+      "num_sources": 3,
+      "response_time": 12.86,
+      "quality_metrics": {
+        "keyword_coverage": 0.5,
+        "keywords_found": 2,
+        "total_keywords": 4,
+        "has_citation": false,
+        "word_count": 56,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:43:41.894398"
+    },
+    {
+      "question": "What is the duration of this NDA?",
+      "expected_type": "duration",
+      "detected_type": "duration",
+      "type_match": true,
+      "answer": "Remain in effect until __________ (Check one)  months  years from the date hereof or until the Confidential Information ceases to be a trade secret, except to the extent that such Confidential Information is excluded from the obligations of confidentiality under this Agreement pursuant to Paragraph 2 above. 4. Non-Disclosure of Transaction. Without Disclosing Party\u2019s prior written consent, neither Receiving Party nor its Representatives shall disclose to any other person, except to the extent, the provisions of [Clause 2] (Source: Uploaded Contract)",
+      "answer_length": 555,
+      "num_sources": 2,
+      "response_time": 12.76,
+      "quality_metrics": {
+        "keyword_coverage": 0.25,
+        "keywords_found": 1,
+        "total_keywords": 4,
+        "has_citation": true,
+        "word_count": 81,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:43:54.659214"
+    },
+    {
+      "question": "What obligations survive termination?",
+      "expected_type": "obligations",
+      "detected_type": "general",
+      "type_match": false,
+      "answer": "According to Clause 2 states: (Check one)  Survive the termination of this Agreement, and at no time will Receiving Party or any of its Representatives be permitted to disclose Confidential Information, except to the extent that such [Clause 2] (Source: Uploaded Contract) esentatives adhere to the terms of this Agreement. Receiving Party will be responsible for any breach of this Agreement by any of its Representatives. 6. Disclaimer. There is no representation or warranty, express or implied, made by Disclosing Party as to the accuracy or completeness of any of its Confidential Information. Except for the matters set forth in this Agreement, neither party will be under any obligation with regard to the Transaction. Either party may, in its sole discretion: (a) reject any proposals made by the other party or its Representatives with respect to the Transaction; (b) terminate discussions and negotiations with the other party or its Representatives at any time and for any reason or for no reason; and (c) change the procedures relating",
+      "answer_length": 1047,
+      "num_sources": 2,
+      "response_time": 22.67,
+      "quality_metrics": {
+        "keyword_coverage": 1.0,
+        "keywords_found": 4,
+        "total_keywords": 4,
+        "has_citation": true,
+        "word_count": 167,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:44:17.333496"
+    },
+    {
+      "question": "What happens to confidential information after termination?",
+      "expected_type": "confidentiality",
+      "detected_type": "confidentiality",
+      "type_match": true,
+      "answer": "According to Clause 1: ed or destroyed as directed by Disclosing Party; d. If there is an unauthorized disclosure or loss of any of the Confidential Information by Receiving Party or any of its Representatives, Receiving Party will promptly, at its own expense, notify Disclosing Party in writing and take all actions as may be necessary or reasonably requested by Disclosing Party to minimize any damage to the Disclosing Party or a third party as a result of the disclosure or loss; and e. The obligation not to disclose Confidential Information shall: (Check one)  Survive the termination of this Agreement, and at no time will Receiving Party or any of its Representatives be permitted to disclose Confidential Information, except to the extent that such [Clause 2] (Source: Uploaded Contract) al Information except in conformity with this Agreement; b. Receiving Party and its Representatives shall adopt and/or maintain security processes and procedures to safeguard the confidentiality of all Confidential Information received by Disclosing Party using a reasonable degree of care, but not less than that degree of care used in safeguarding",
+      "answer_length": 1147,
+      "num_sources": 2,
+      "response_time": 24.52,
+      "quality_metrics": {
+        "keyword_coverage": 0.75,
+        "keywords_found": 3,
+        "total_keywords": 4,
+        "has_citation": true,
+        "word_count": 180,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:44:41.852483"
+    },
+    {
+      "question": "What are the remedies for breach of this agreement?",
+      "expected_type": "liability",
+      "detected_type": "liability",
+      "type_match": true,
+      "answer": "According to Clause 2 states: (a) money damages may not be a sufficient remedy for any breach of this Agreement by such party; (b) the other party may be entitled to specific performance and injunction and other equitable relief with respect to any such breach; (c) such remedies will not be the exclusive remedies for any such breach, but will be in addition to all other remedies available at law or in equity; and (d) in the event of litigation relating to this Agreement, if a court of competent jurisdiction determines in a final non-appealable order that one party, or any of its Representatives, has breached this Agreement, such party will be liable for reasonable legal fees and expenses incurred by the other party in connection with such litigation, including, but not limited to, any appeals.",
+      "answer_length": 804,
+      "num_sources": 3,
+      "response_time": 24.51,
+      "quality_metrics": {
+        "keyword_coverage": 1.0,
+        "keywords_found": 4,
+        "total_keywords": 4,
+        "has_citation": true,
+        "word_count": 136,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:45:06.365315"
+    },
+    {
+      "question": "Who are the parties to this agreement?",
+      "expected_type": "party",
+      "detected_type": "party",
+      "type_match": true,
+      "answer": "Disclosing Party: Disclosing Party Signature Disclosing Party Representative Disclosing Party Representative Signature Full Name and Title Receiving Party: Receiving Party Signature Receiving Party Full Name Receiving Party Representative Disclosing Party Representative Signature Full Name and Title",
+      "answer_length": 300,
+      "num_sources": 2,
+      "response_time": 7.31,
+      "quality_metrics": {
+        "keyword_coverage": 0.3333333333333333,
+        "keywords_found": 1,
+        "total_keywords": 3,
+        "has_citation": false,
+        "word_count": 36,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:45:13.677612"
+    },
+    {
+      "question": "What is considered confidential information?",
+      "expected_type": "definition",
+      "detected_type": "confidentiality",
+      "type_match": false,
+      "answer": "[Clause 1] (Source: Uploaded Contract) ) all other non-public information provided by Disclosing Party whosoever. All Confidential Information shall remain the property of Disclosing Party.  Only information marked \u2018Confidential.\u2019 \"Confidential Information,\" exchanged by the parties and entitled to protection hereunder, shall be identified or marked as such by an appropriate stamp or marking on each document exchanged designating the information as confidential or proprietary.  Specific information. The term \u201cConfidential Information\u201d as used in this Agreement shall mean any data or information that is competitively sensitive material and not generally known to the public, including, but not limited to, information relating to any of the, which Disclosing Party considers confidential: (Check all that apply) [Clause 2] (Source: Uploaded Contract) s or advisors (collectively, \u201cRepresentatives\u201d) may provide or gain access to certain confidential and proprietary information. A party disclosing its Confidential Information to the other party is hereafter referred to as a \u201cDisclosing Party.\u201d A party receiving the Conf",
+      "answer_length": 1129,
+      "num_sources": 3,
+      "response_time": 27.56,
+      "quality_metrics": {
+        "keyword_coverage": 0.75,
+        "keywords_found": 3,
+        "total_keywords": 4,
+        "has_citation": true,
+        "word_count": 157,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:45:41.234146"
+    },
+    {
+      "question": "Can either party terminate without cause?",
+      "expected_type": "termination",
+      "detected_type": "party",
+      "type_match": false,
+      "answer": "According to Clause 2 states: (Check one)  Survive the termination of this Agreement, and at no time will Receiving Party or any of its Representatives be permitted to disclose Confidential Information, except to the extent that such",
+      "answer_length": 233,
+      "num_sources": 2,
+      "response_time": 6.65,
+      "quality_metrics": {
+        "keyword_coverage": 0.0,
+        "keywords_found": 0,
+        "total_keywords": 3,
+        "has_citation": true,
+        "word_count": 37,
+        "is_substantial": true,
+        "is_not_found": false
+      },
+      "timestamp": "2026-01-24T15:45:47.888499"
+    }
+  ],
+  "test_cases": [
+    {
+      "question": "How can this agreement be terminated?",
+      "type": "termination",
+      "expected_keywords": [
+        "terminate",
+        "notice",
+        "days",
+        "written"
+      ]
+    },
+    {
+      "question": "What is the duration of this NDA?",
+      "type": "duration",
+      "expected_keywords": [
+        "year",
+        "term",
+        "period",
+        "effective"
+      ]
+    },
+    {
+      "question": "What obligations survive termination?",
+      "type": "obligations",
+      "expected_keywords": [
+        "survive",
+        "obligation",
+        "termination",
+        "confidential"
+      ]
+    },
+    {
+      "question": "What happens to confidential information after termination?",
+      "type": "confidentiality",
+      "expected_keywords": [
+        "return",
+        "destroy",
+        "confidential",
+        "information"
+      ]
+    },
+    {
+      "question": "What are the remedies for breach of this agreement?",
+      "type": "liability",
+      "expected_keywords": [
+        "remedy",
+        "breach",
+        "damages",
+        "injunction"
+      ]
+    },
+    {
+      "question": "Who are the parties to this agreement?",
+      "type": "party",
+      "expected_keywords": [
+        "party",
+        "parties",
+        "between"
+      ]
+    },
+    {
+      "question": "What is considered confidential information?",
+      "type": "definition",
+      "expected_keywords": [
+        "confidential",
+        "information",
+        "include",
+        "mean"
+      ]
+    },
+    {
+      "question": "Can either party terminate without cause?",
+      "type": "termination",
+      "expected_keywords": [
+        "terminate",
+        "cause",
+        "without"
+      ]
+    }
+  ]
+}
