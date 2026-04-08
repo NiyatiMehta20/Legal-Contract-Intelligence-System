@@ -1,99 +1,129 @@
-# Legal-Contract-Intelligence-System
-AI-powered contract analysis using hybrid RAG retrieval, cross-encoder reranking, and LLM answer generation, achieving 75% citation rate and sub-18s response latency
+# Legal Contract Intelligence System
 
+AI-powered contract analysis using hybrid RAG retrieval, cross-encoder reranking, and LLM answer generation — achieving **75% citation rate** and **sub-18s response latency** on a CPU-only stack.
 
-What It Does
+---
 
-Upload any legal contract (NDA, lease agreement, employment contract) and ask natural language questions about it. The system retrieves the most relevant clauses using a multi-stage AI pipeline and generates grounded, explainable answers with direct citations.
+## What it does
 
-Ask questions like:
+Upload any legal contract (NDA, lease, employment agreement) and ask plain-English questions. The system retrieves the most relevant clauses using a multi-stage retrieval pipeline and returns grounded answers with direct clause citations — no hallucination, no guesswork.
 
+```
 "How can this agreement be terminated?"
-
 "What obligations survive termination?"
-
 "What are the remedies for breach?"
-
 "What is considered confidential information?"
+```
 
-Key Features
+---
 
-Hybrid Retrieval — Combines FAISS dense vector search (60%) with BM25 keyword search (40%) for high recall across both semantic and exact-match queries
+## Evaluation results
 
-Cross-Encoder Reranking — Uses ms-marco-MiniLM-L-6-v2 to rerank top-15 candidates for precision
+Benchmarked across 8 diverse legal query types on a real NDA contract:
 
-Smart Clause Selection — Deduplication and query-type-aware selection returns 2–5 clauses based on question complexity
+| Metric | Score |
+|---|---|
+| Citation rate | 75% |
+| Substantial answer rate | 100% |
+| Avg keyword coverage | 57.3% |
+| Avg response time | 17.4s |
+| Avg sources per answer | 2.4 clauses |
+| Avg answer length | 106 words |
 
-Query Intent Detection — Classifies 12 legal query types (termination, liability, confidentiality, etc.) to tune retrieval strategy
+Full results in `evaluation_results_20260124_154547.json`.
 
-Explainable Outputs — Every answer includes clause-level citations so you can verify against the source
+---
 
-Gradio UI — Clean web interface with upload, Q&A, and source viewer panels
+## Pipeline architecture
 
-CPU-Optimised — Runs fully on CPU with no GPU required
+The system is a four-stage pipeline — each stage is independently testable and swappable.
 
-Evaluation Results
+```
+┌─────────────────────────────────────────────────────────┐
+│  1. Document ingestion          build_vector_store.py   │
+│     PDF / DOCX / TXT → section-aware chunking           │
+│     → e5-base-v2 embeddings → FAISS + BM25 index        │
+└────────────────────────┬────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────┐
+│  2. Hybrid retrieval            search_clauses.py        │
+│     top-30 FAISS (semantic) + top-30 BM25 (keyword)      │
+│     scores normalised → fused 0.6/0.4 → top-15          │
+│     reranked with ms-marco-MiniLM-L-6-v2 cross-encoder  │
+└────────────────────────┬────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────┐
+│  3. Smart clause selection   smart_clause_selector.py   │
+│     12 legal query types detected via regex             │
+│     clause count set by complexity (2–5)                │
+│     near-duplicate filtering (char similarity > 0.7)    │
+└────────────────────────┬────────────────────────────────┘
+                         │
+┌────────────────────────▼────────────────────────────────┐
+│  4. Answer generation          answer_generator.py      │
+│     FLAN-T5-Large · CPU-only · no GPU required          │
+│     query-type-aware formatting · citations injected    │
+└────────────────────────┬────────────────────────────────┘
+                         │
+          Grounded answer with clause citations
+          avg 106 words · 75% citation rate
+```
 
-Evaluated across 8 diverse legal query types on a real NDA contract:
+---
 
-MetricScoreCitation Rate75%
+## Design decisions
 
-Substantial Answer Rate100%
+**Why hybrid retrieval?**
+Dense vectors catch semantic meaning ("what survives termination?" matches "obligations post-expiry") but miss exact legal terms. BM25 catches verbatim phrases ("injunctive relief", "indemnification") that embeddings dilute. The 60/40 split was chosen empirically — legal language sits at the intersection of both failure modes.
 
-Avg Keyword Coverage 57.3%
+**Why a cross-encoder reranker?**
+Bi-encoders (like e5-base-v2) compress query and document independently, which loses interaction signal. The cross-encoder sees both together, catching cases where a clause is semantically adjacent but not quite right. It runs only on 15 candidates, not the full corpus, keeping latency acceptable.
 
-Avg Response Time 17.4s
+**Why variable clause counts?**
+A "who are the parties?" question needs exactly one well-placed clause. A liability question might require four to cover damages, remedies, limitations, and jurisdiction. Fixed top-k retrieval produces bloated answers for simple queries and incomplete ones for complex queries.
 
-Avg Sources Per Answer 2.4 clauses
+**Why FLAN-T5-Large over Mistral?**
+For a CPU-only deployment targeting sub-20s latency, T5's encoder-decoder architecture is significantly faster on CPU than autoregressive decoder-only models. The answer quality gap is compensated by structured post-processing in `_format_natural_answer()`.
 
-Avg Answer Length 106 words
+---
 
+## Project structure
 
-Full results in evaluation_results_20260124_154547.json
+```
+├── build_vector_store.py     # Ingestion: chunking, embedding, FAISS + BM25 index
+├── chunk_contract.py         # Section-aware chunking logic
+├── load_contract.py          # PDF / DOCX / TXT loader
+├── search_clauses.py         # Hybrid retrieval + reranking pipeline
+├── smart_clause_selector.py  # Query intent detection + clause selection
+├── answer_generator.py       # FLAN-T5-Large answer generation
+├── frontend_app.py           # Gradio UI
+├── evaluation.py             # Evaluation harness
+└── evaluation_results_*.json
+```
 
-How the Pipeline Works
+---
 
-1. Document Ingestion (build_vector_store.py)
+## Quickstart
 
-Loads PDF, DOCX, or TXT contracts via load_contract.py
+```bash
+pip install faiss-cpu sentence-transformers rank-bm25 transformers gradio pdfplumber python-docx
 
-Chunks using chunk_contract_advanced() — respects section boundaries, preserves clause structure, overlaps by 100 characters
+# Index a contract
+mkdir uploads && cp your_contract.pdf uploads/
+python build_vector_store.py
 
-Embeds chunks using intfloat/e5-base-v2 (E5 model with passage: prefix)
+# Launch the UI
+python frontend_app.py
+# → http://127.0.0.1:7860
+```
 
-Stores in FAISS IndexFlatIP (inner product / cosine similarity)
+First query takes ~30s (model load). Subsequent queries: 5–18s on CPU.
 
-Builds a parallel BM25 index using rank-bm25
+---
 
-2. Retrieval (search_clauses.py)
+## Known limitations
 
-Embeds the query with query: prefix (E5 asymmetric encoding)
-
-Retrieves top-30 from FAISS and top-30 from BM25 independently
-
-Normalises both score distributions to [0, 1]
-
-Fuses: hybrid = 0.6 × dense + 0.4 × BM25
-
-Reranks top-15 candidates using a cross-encoder (ms-marco-MiniLM-L-6-v2)
-
-3. Clause Selection (smart_clause_selector.py)
-
-Detects query type from 12 intent classes using regex patterns
-
-Sets suggested_clause_count (2–5) based on query complexity
-
-Filters near-duplicate chunks using character-level similarity (threshold: 0.7)
-
-Falls back to top-2 clauses if insufficient results pass threshold
-
-4. Answer Generation (answer_generator.py)
-
-Formats selected clauses into a structured prompt for FLAN-T5-Large
-
-Applies question-type-aware response formatting (termination / party / definition etc.)
-
-Injects clause citations into the final answer
-
-Includes a low-relevance fallback with a user-facing confidence note
-
+- **Type detection accuracy is 50%.** The regex classifier misroutes multi-signal queries — e.g. "Can either party terminate without cause?" fires on `party` before `termination`. Replacing regex with a fine-tuned classifier or few-shot prompt is the next improvement.
+- **Answer quality is bounded by FLAN-T5.** The model's seq2seq architecture produces terse outputs; the `_format_natural_answer()` wrapper compensates but can misfire on novel question structures.
+- **Single-document only.** The current pipeline indexes the most recently uploaded file and wipes previous indexes. Multi-document comparison is not yet supported.
+- **Response time is CPU-bound at ~17s.** Moving to a smaller generative model or GPU inference would bring this under 5s.
